@@ -12,13 +12,13 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: JQB Ltd
-  productName: JQB Cocktailer
+  companyName: TimeWalk.org
+  productName: JQB Ltd
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
+  m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_ShowUnitySplashScreen: 1
-  m_ShowUnitySplashLogo: 1
+  m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
   m_SplashScreenLogoStyle: 1
@@ -39,7 +39,9 @@ PlayerSettings:
     y: 0
     width: 1
     height: 1
-  m_SplashScreenLogos: []
+  m_SplashScreenLogos:
+  - logo: {fileID: 21300000, guid: 5a4062b3b6a14499593eeffe669ed340, type: 3}
+    duration: 3
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
@@ -70,7 +72,7 @@ PlayerSettings:
   macRetinaSupport: 1
   runInBackground: 1
   captureSingleScreen: 0
-  muteOtherAudioSources: 0
+  muteOtherAudioSources: 1
   Prepare IOS For Recording: 0
   Force IOS Speakers When Recording: 0
   deferSystemGesturesMode: 0
@@ -118,9 +120,8 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.4
-  preloadedAssets:
-  - {fileID: 4800000, guid: e7c77f6eaab324a819efdc13b8125a39, type: 3}
+  bundleVersion: 0.5
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -165,9 +166,9 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.unity.arfoundation.samples
     Standalone: com.unity.arfoundation.samples
-    iPhone: com.jqbltd.arcocktailer
+    iPhone: com.timewalk.jqbltd-arviewer
   buildNumber:
-    iPhone: 1
+    iPhone: 2
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 24
   AndroidTargetSdkVersion: 0
@@ -246,13 +247,13 @@ PlayerSettings:
   metalEditorSupport: 1
   metalAPIValidation: 1
   iOSRenderExtraFrameOnPause: 0
-  appleDeveloperTeamID: 24Q2Z7U74F
+  appleDeveloperTeamID: 63K8J7P389
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 0
   tvOSManualSigningProvisioningProfileType: 0
   appleEnableAutomaticSigning: 0
-  iOSRequireARKit: 0
+  iOSRequireARKit: 1
   iOSAutomaticallyDetectAndAddCapabilities: 1
   appleEnableProMotion: 0
   clonedFromGUID: 56e7a2d3a00f33d44bdd161b773c35b5
@@ -519,7 +520,7 @@ PlayerSettings:
     - Oculus
     - OpenVR
   - m_BuildTarget: iPhone
-    m_Enabled: 1
+    m_Enabled: 0
     m_Devices: []
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
@@ -538,8 +539,8 @@ PlayerSettings:
   logObjCUncaughtExceptions: 1
   enableCrashReportAPI: 0
   cameraUsageDescription: Camera required for AR
-  locationUsageDescription: 
-  microphoneUsageDescription: 
+  locationUsageDescription: Location required for AR
+  microphoneUsageDescription: Microphone required for AR
   switchNetLibKey: 
   switchSocketMemoryPoolSize: 6144
   switchSocketAllocatorPoolSize: 128

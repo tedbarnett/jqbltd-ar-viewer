@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 8687496375005388161}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.79851, y: 0.79851, z: 0.79851}
   m_Children:
   - {fileID: 5757946863841800469}
   - {fileID: 917991958117293310}
@@ -39,30 +39,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2785702671086387113}
     m_Modifications:
-    - target: {fileID: 652268295092012517, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
-        type: 3}
-      propertyPath: m_Name
-      value: US flag and flagpole
-      objectReference: {fileID: 0}
-    - target: {fileID: 652268295092012517, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 652268295092012516, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 64.15
+      value: 6.14
       objectReference: {fileID: 0}
     - target: {fileID: 652268295092012516, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -19.789999
+      value: -0.24
       objectReference: {fileID: 0}
     - target: {fileID: 652268295092012516, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.29999998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 652268295092012516, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
         type: 3}
@@ -107,17 +97,17 @@ PrefabInstance:
     - target: {fileID: 652268295092012516, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.79999995
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 652268295092012516, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.79999995
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 652268295092012516, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.79999995
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 652268293675643500, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
         type: 3}
@@ -139,6 +129,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 652268295092012517, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
+        type: 3}
+      propertyPath: m_Name
+      value: US flag and flagpole
+      objectReference: {fileID: 0}
+    - target: {fileID: 652268295092012517, guid: 41c8e1f6910de466f8b8b5899eb76ab3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41c8e1f6910de466f8b8b5899eb76ab3, type: 3}
 --- !u!4 &917991958117293310 stripped
@@ -154,20 +154,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2785702671086387113}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: d66ab76abf7cc4da3879b83d446a30ac,
-        type: 3}
-      propertyPath: m_Name
-      value: 135m Exploration World Cruiser
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d66ab76abf7cc4da3879b83d446a30ac,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -59.830456
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d66ab76abf7cc4da3879b83d446a30ac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.58357
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d66ab76abf7cc4da3879b83d446a30ac,
         type: 3}
@@ -212,6 +207,31 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d66ab76abf7cc4da3879b83d446a30ac,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: d66ab76abf7cc4da3879b83d446a30ac,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: d66ab76abf7cc4da3879b83d446a30ac,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: d66ab76abf7cc4da3879b83d446a30ac,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: d66ab76abf7cc4da3879b83d446a30ac,
+        type: 3}
+      propertyPath: m_Name
+      value: 135m Exploration World Cruiser
+      objectReference: {fileID: 0}
+    - target: {fileID: -2793972795145978136, guid: d66ab76abf7cc4da3879b83d446a30ac,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

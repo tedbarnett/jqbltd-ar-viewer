@@ -26,7 +26,6 @@ public class timewalkControllerAR : MonoBehaviour
     GameObject m_PlacedPrefab;
 
     // Assign in the inspector
-    private GameObject timeWalkObject;
     public Slider rotationSlider;
     public Slider scaleSlider;
 
@@ -42,6 +41,7 @@ public class timewalkControllerAR : MonoBehaviour
     // Preserve the original and current orientation
     private float previousValue;
     private float previousValueScale;
+    private GameObject timeWalkObject;
 
     // The prefab to instantiate on touch.
     public GameObject placedPrefab
@@ -49,10 +49,9 @@ public class timewalkControllerAR : MonoBehaviour
         get { return m_PlacedPrefab; }
         set { m_PlacedPrefab = value; }
     }
+    public GameObject arPlane; // used to hide/show the plane object
 
-    // The scenery prefab to instantiate on touch
-    public GameObject sceneryPrefab;
-    private GameObject sceneryObject;
+    //private GameObject positionHolderObject; // an empty prefab used to private "parenting" to the objects
 
     // The object instantiated as a result of a successful raycast intersection with a plane.
     public GameObject spawnedObject { get; private set; }
@@ -80,6 +79,8 @@ public class timewalkControllerAR : MonoBehaviour
         modelNameText = GameObject.Find("Model Name").GetComponent<Text>();
         debugText = GameObject.Find("Debug Text").GetComponent<Text>();
 
+        //positionHolderObject = new GameObject(); // holds object positions even when currentObject is destroyed
+
         // NOTE: make sure all building prefabs are inside this folder: "Assets/Resources/Prefabs"
 
         Object[] subListObjects = Resources.LoadAll("Prefabs", typeof(GameObject));
@@ -89,18 +90,26 @@ public class timewalkControllerAR : MonoBehaviour
             myListObjects.Add(lo);
             ++objectsListLength;
         }
+
+        // TODO: Do we need to instantiate timeWalkObject first, before making it a parent?
+
+        //positionHolderObject = Instantiate(myListObjects[currentObjectIndex]) as GameObject;
+        //Instantiate(positionHolderObject, transform.position, Quaternion.identity);
+
         GameObject myObj = Instantiate(myListObjects[currentObjectIndex]) as GameObject;
-        myObj.transform.parent = gameObject.transform; // make instantiated object a child of the TimeWalkObject?
+        myObj.transform.parent = gameObject.transform; // original version
+        //positionHolderObject.transform.parent = gameObject.transform; // TODO: confirm?
+
         objectNameString = myObj.name;
         objectNameString = objectNameString.Substring(5);
         modelNameText.text = objectNameString.Replace("(Clone)", "");
-        // modelNameText.text = "Place model below"; // blank name until placed
+        modelNameText.text = ""; // blank name until placed
         myObj.transform.gameObject.SetActive(false); // hide object at start (not yet placed)
 
         currentObject = myObj;
 
-        debugText.text = "";
-        debugText.transform.gameObject.SetActive(true); // hide debugText until there is a message
+        //debugText.text = "currentObject = " + currentObject.name;
+        //debugText.transform.gameObject.SetActive(true); // show debugText
 
         //audioData = GetComponent<AudioSource>();
         //audioData.Play(0);
@@ -147,8 +156,6 @@ public class timewalkControllerAR : MonoBehaviour
         }
         #endif
 
-        //debugText.text = "spawnedObject = " + spawnedObject;
-
 
         Touch touch;
         if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
@@ -172,16 +179,18 @@ public class timewalkControllerAR : MonoBehaviour
             if (spawnedObject == null) // if the object has not been spawned yet
             {
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-                timeWalkObject = spawnedObject;
+                currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
 
-                debugText.text = "FIRST OBJECT SPAWNED ";
-                // TODO: Figure out when first called: instantiate scenery then too!
-                sceneryObject = Instantiate(sceneryPrefab, hitPose.position, hitPose.rotation); // TODO: But will it rotate, scale?
+                //arPlane.transform.gameObject.SetActive(false); // hide plane after placement
+                arPlane.GetComponent<Renderer>().enabled = false; // hide plane after placement
+
+                //debugText.text = "spawnedObject " + spawnedObject.name;
 
             }
             else
             {
                 spawnedObject.transform.position = hitPose.position;
+
             }
         }
     }
@@ -190,6 +199,9 @@ public class timewalkControllerAR : MonoBehaviour
     public void SpawnNextObject(int incrementNumber)
     {
         Destroy(currentObject);
+        // TODO: Figure out how to destroy children of timeWalkObject too.  Or maybe it's okay?
+
+
         currentObjectIndex = currentObjectIndex + incrementNumber;
         if (currentObjectIndex >= objectsListLength)
         {
@@ -205,7 +217,8 @@ public class timewalkControllerAR : MonoBehaviour
 
         myObj.transform.gameObject.SetActive(true); // TODO: Is this necessary???
 
-        myObj.transform.parent = gameObject.transform; // set as child of this object
+        //myObj.transform.parent = positionHolderObject.gameObject.transform; // set as child of the timewalkObject
+        myObj.transform.parent = gameObject.transform; // original version
         myObj.transform.localScale = new Vector3(scaleSlider.value, scaleSlider.value, scaleSlider.value);
         myObj.transform.Rotate(Vector3.down * rotationSlider.value * 360);
 
@@ -214,7 +227,7 @@ public class timewalkControllerAR : MonoBehaviour
         objectNameString = objectNameString.Substring(5);
         modelNameText.text = objectNameString.Replace("(Clone)", "");
 
-        // TODO: myObj.transform.position = transform.position; // Should we revert to this?
+        myObj.transform.position = transform.position; // Should we revert to this?
 
         currentObject = myObj;
     }
@@ -222,6 +235,9 @@ public class timewalkControllerAR : MonoBehaviour
     // ROTATION CHANGE
     void OnRotationSliderChanged(float value)
     {
+        //timeWalkObject = GameObject.Find("TimeWalkObject");
+        //debugText.text = "timeWalkObject = " + timeWalkObject;
+        //debugText.text = debugText.text + "currentObject = " + currentObject;
 
         // How much we've changed the rotation
         float delta = value - this.previousValue;
@@ -237,8 +253,11 @@ public class timewalkControllerAR : MonoBehaviour
     // SCALE CHANGE
     void OnScaleSliderChanged(float value)
     {
+
+        //timeWalkObject = GameObject.Find("TimeWalkObject");
+
         // TODO: Write scale change code
-        debugText.text = "Scale = " + value;
+        //debugText.text = "Scale = " + value;
 
         // Set scale based on slider position
         //this.timeWalkObject.transform.localScale += new Vector3(value, value, value);
