@@ -29,6 +29,7 @@ Transform:
   m_Children:
   - {fileID: 5757946863841800469}
   - {fileID: 917991958117293310}
+  - {fileID: 6874977067991981062}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -241,4 +242,67 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: d66ab76abf7cc4da3879b83d446a30ac,
     type: 3}
   m_PrefabInstance: {fileID: 761920759873722895}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6874977067991582342
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2785702671086387113}
+    m_Modifications:
+    - target: {fileID: 100000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_Name
+      value: Seagull Flock - Wild Few
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e5318f3df9556c9479596abbe290a849, type: 3}
+--- !u!4 &6874977067991981062 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: e5318f3df9556c9479596abbe290a849,
+    type: 3}
+  m_PrefabInstance: {fileID: 6874977067991582342}
   m_PrefabAsset: {fileID: 0}
