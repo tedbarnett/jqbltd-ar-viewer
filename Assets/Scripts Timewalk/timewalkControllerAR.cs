@@ -26,6 +26,11 @@ public class timewalkControllerAR : MonoBehaviour
     GameObject m_PlacedPrefab;
 
     // Assign in the inspector
+    public GameObject placedPrefab // The prefab to instantiate on touch.
+    {
+        get { return m_PlacedPrefab; }
+        set { m_PlacedPrefab = value; }
+    }
     public Slider rotationSlider;
     public Slider scaleSlider;
 
@@ -45,12 +50,7 @@ public class timewalkControllerAR : MonoBehaviour
     private GameObject timeWalkObject;
     private GameObject positionHolderObject;
 
-    // The prefab to instantiate on touch.
-    public GameObject placedPrefab
-    {
-        get { return m_PlacedPrefab; }
-        set { m_PlacedPrefab = value; }
-    }
+
 
     //private GameObject positionHolderObject; // an empty prefab used to private "parenting" to the objects
 
@@ -61,23 +61,18 @@ public class timewalkControllerAR : MonoBehaviour
     {
         m_RaycastManager = GetComponent<ARRaycastManager>();
 
-        // Assign a callback for when the rotation slider changes
-        this.rotationSlider.onValueChanged.AddListener(this.OnRotationSliderChanged);
+        // Assign callbacks for sliders
+        this.rotationSlider.onValueChanged.AddListener(this.OnRotationSliderChanged); // rotation slider callback
+        this.previousValue = this.rotationSlider.value; // store current rotation slider value
 
-        // And current value
-        this.previousValue = this.rotationSlider.value;
+        this.scaleSlider.onValueChanged.AddListener(this.OnScaleSliderChanged); // scale slider callback
+        this.previousValueScale = this.scaleSlider.value; // store current scale slider value
 
-        // Assign a callback for when the SCALE slider changes
-        this.scaleSlider.onValueChanged.AddListener(this.OnScaleSliderChanged);
-
-        // And current value
-        this.previousValueScale = this.scaleSlider.value;
-
-        runningOnDesktop = false;
         #if UNITY_EDITOR
-                runningOnDesktop = true;
+            runningOnDesktop = true;
+        #else
+            runningOnDesktop = false;
         #endif
-
     }
 
     void Start()
@@ -154,27 +149,15 @@ public class timewalkControllerAR : MonoBehaviour
                 else
                     {
                         spawnedObject.transform.position = new Vector3(0, 0, 0);
-
                     }
                 }
             }
         #endif
 
         Touch touch;
-        if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-        {
-            return; // don't update if just touched or m_Content is null (not set yet)
-        }
-
-        if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) // ignore touches on UI (sliders, etc.)
-        {
-            return;
-        }
-
-        if (!TryGetTouchPosition(out Vector2 touchPosition)) // if no touch, then return from Update
-        {
-            return;
-        }
+        if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began) return;
+        if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return; // ignore touches on UI (sliders, etc.)
+        if (!TryGetTouchPosition(out Vector2 touchPosition)) return; // if no touch, then return from Update
 
         if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon))
         {
@@ -186,12 +169,10 @@ public class timewalkControllerAR : MonoBehaviour
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
                 currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
                 currentObject.transform.gameObject.SetActive(true); // show the object now that it is placed
-
             }
             else
             {
                 spawnedObject.transform.position = hitPose.position;
-
             }
         }
     }
