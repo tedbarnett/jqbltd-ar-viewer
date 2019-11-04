@@ -43,6 +43,7 @@ public class timewalkControllerAR : MonoBehaviour
     private float previousValue;
     private float previousValueScale;
     private GameObject timeWalkObject;
+    private GameObject positionHolderObject;
 
     // The prefab to instantiate on touch.
     public GameObject placedPrefab
@@ -72,6 +73,11 @@ public class timewalkControllerAR : MonoBehaviour
         // And current value
         this.previousValueScale = this.scaleSlider.value;
 
+        runningOnDesktop = false;
+        #if UNITY_EDITOR
+                runningOnDesktop = true;
+        #endif
+
     }
 
     void Start()
@@ -79,8 +85,7 @@ public class timewalkControllerAR : MonoBehaviour
         modelNameText = GameObject.Find("Model Name").GetComponent<Text>();
         debugText = GameObject.Find("Debug Text").GetComponent<Text>();
 
-        //positionHolderObject = new GameObject(); // holds object positions even when currentObject is destroyed
-
+        // Set up list of all prefabs to cycle through...
         // NOTE: make sure all building prefabs are inside this folder: "Assets/Resources/Prefabs"
 
         Object[] subListObjects = Resources.LoadAll("Prefabs", typeof(GameObject));
@@ -91,31 +96,20 @@ public class timewalkControllerAR : MonoBehaviour
             ++objectsListLength;
         }
 
-        // TODO: Do we need to instantiate timeWalkObject first, before making it a parent?
-
-        //positionHolderObject = Instantiate(myListObjects[currentObjectIndex]) as GameObject;
-        //Instantiate(positionHolderObject, transform.position, Quaternion.identity);
-
         GameObject myObj = Instantiate(myListObjects[currentObjectIndex]) as GameObject;
-        myObj.transform.parent = gameObject.transform; // original version
-        //positionHolderObject.transform.parent = gameObject.transform; // TODO: confirm?
+        myObj.transform.parent = gameObject.transform; // Makes "myObj" a child of AR Session
 
         objectNameString = myObj.name;
-        objectNameString = objectNameString.Substring(5);
+        // objectNameString = objectNameString.Substring(5); // Only needed with TimeWalk buildings remove first 4 chars)
         modelNameText.text = objectNameString.Replace("(Clone)", "");
         modelNameText.text = ""; // blank name until placed
-        myObj.transform.gameObject.SetActive(true); // hide object at start (not yet placed)
+        myObj.transform.gameObject.SetActive(false); // hide object at start (not yet placed)
 
         currentObject = myObj;
 
-        //debugText.text = "currentObject = " + currentObject.name;
-        //debugText.transform.gameObject.SetActive(true); // show debugText
-
-        //audioData = GetComponent<AudioSource>();
-        //audioData.Play(0);
     }
 
-    // GET TOUCH EVENTS (or Clicks)
+    // GET TOUCH EVENTS (or Mouse Clicks)
     bool TryGetTouchPosition(out Vector2 touchPosition)
     {
         #if UNITY_EDITOR
@@ -123,8 +117,6 @@ public class timewalkControllerAR : MonoBehaviour
             {
                 var mousePosition = Input.mousePosition;
                 touchPosition = new Vector2(mousePosition.x, mousePosition.y);
-                //debugText.text = "Clicked at " + touchPosition;
-
                 return true;
             }
         #else
@@ -136,46 +128,38 @@ public class timewalkControllerAR : MonoBehaviour
         #endif
 
         touchPosition = default;
-
-        return false;
+        return false; // if not click or touch, then return "false"
     }
 
     void Update()
     {
-        runningOnDesktop = false;
 
         #if UNITY_EDITOR
-            runningOnDesktop = true;
-
             if (Input.GetMouseButton(0)) // mouse click outside UI
             {
                 if (!EventSystem.current.IsPointerOverGameObject())
                 {
                     var mousePosition = Input.mousePosition;
                     var clickPosition = new Vector2(mousePosition.x, mousePosition.y);
-                    //debugText.text = "Clicked at " + clickPosition;
-                    //debugText.text = "\n" + "Click confirmed";
-
-                    if (spawnedObject == null) // if the object has not been spawned yet
+                    if (spawnedObject == null) // if the object has not been spawned yet, then spawn it at origin
                     {
                         spawnedObject = Instantiate(m_PlacedPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                         currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
-                        //debugText.text = "spawnedObject " + spawnedObject.name;
+                        currentObject.transform.gameObject.SetActive(true); // show the object now that it is placed
 
+                    // Test disabling the Plane once the object is placed...
                     // myScript = gameObject.GetComponent<"ARPlaneManager">();
                     // GameObject.FindGameObjectWithTag("YOUR GAME OBJECT").GetComponent().enabled = false;
-
                 }
-                    else
+                else
                     {
                         spawnedObject.transform.position = new Vector3(0, 0, 0);
 
                     }
-
                 }
             }
         #endif
-        //debugText.text = "After endif";
+
         Touch touch;
         if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
         {
@@ -184,15 +168,11 @@ public class timewalkControllerAR : MonoBehaviour
 
         if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) // ignore touches on UI (sliders, etc.)
         {
-            //debugText.text = "Clicked UI";
-
             return;
         }
 
-        if (!TryGetTouchPosition(out Vector2 touchPosition))
+        if (!TryGetTouchPosition(out Vector2 touchPosition)) // if no touch, then return from Update
         {
-            Debug.Log("No touch position found");
-
             return;
         }
 
@@ -205,6 +185,7 @@ public class timewalkControllerAR : MonoBehaviour
             {
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
                 currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
+                currentObject.transform.gameObject.SetActive(true); // show the object now that it is placed
 
             }
             else
@@ -219,8 +200,6 @@ public class timewalkControllerAR : MonoBehaviour
     public void SpawnNextObject(int incrementNumber)
     {
         Destroy(currentObject);
-        // TODO: Figure out how to destroy children of timeWalkObject too.  Or maybe it's okay?
-
 
         currentObjectIndex = currentObjectIndex + incrementNumber;
         if (currentObjectIndex >= objectsListLength)
@@ -244,7 +223,7 @@ public class timewalkControllerAR : MonoBehaviour
 
 
         objectNameString = myObj.name;
-        objectNameString = objectNameString.Substring(5);
+        // objectNameString = objectNameString.Substring(5);
         modelNameText.text = objectNameString.Replace("(Clone)", "");
 
         myObj.transform.position = transform.position; // Should we revert to this?
@@ -255,16 +234,9 @@ public class timewalkControllerAR : MonoBehaviour
     // ROTATION CHANGE
     void OnRotationSliderChanged(float value)
     {
-        //timeWalkObject = GameObject.Find("TimeWalkObject");
-        //debugText.text = "timeWalkObject = " + timeWalkObject;
-        //debugText.text = debugText.text + "currentObject = " + currentObject;
-
         // How much we've changed the rotation
         float delta = value - this.previousValue;
-        //this.timeWalkObject.transform.Rotate(Vector3.down * delta * 360); // TODO: Test this version on iOS
         currentObject.transform.Rotate(Vector3.down * delta * 360);
-
-        // Debug.Log("object transform: " + timeWalkObject.transform);
 
         // Set our previous value for the next change
         this.previousValue = value;
@@ -276,14 +248,8 @@ public class timewalkControllerAR : MonoBehaviour
 
         //timeWalkObject = GameObject.Find("TimeWalkObject");
 
-        // TODO: Write scale change code
-        //debugText.text = "Scale = " + value;
-
         // Set scale based on slider position
-        //this.timeWalkObject.transform.localScale += new Vector3(value, value, value);
         currentObject.transform.localScale = new Vector3(value, value, value);
-
-        // this.previousValueScale = value; // TODO: is this needed?
 
     }
 

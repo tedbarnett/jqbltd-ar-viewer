@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f31a79c3721394a16aa32dfa8f763113, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlacedPrefab: {fileID: 3993290804840288491, guid: 42b5b0593e8ac4d6aa7a2d63568e6579,
+  m_PlacedPrefab: {fileID: 1934569588295450, guid: b34b6c8f1206a6844b983e23b9da0441,
     type: 3}
   rotationSlider: {fileID: 421589288}
   scaleSlider: {fileID: 478273353}
