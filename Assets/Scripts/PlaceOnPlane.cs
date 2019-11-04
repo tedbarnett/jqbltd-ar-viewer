@@ -22,10 +22,14 @@ public class PlaceOnPlane : MonoBehaviour
 
     // Assign in the inspector
     private GameObject objectToRotate;
-    public Slider slider;
+    public Slider rotationSlider;
+    public Slider scaleSlider;
 
     // Preserve the original and current orientation
     private float previousValue;
+
+    private Text debugText;
+
 
     /// <summary>
     /// The prefab to instantiate on touch.
@@ -44,12 +48,19 @@ public class PlaceOnPlane : MonoBehaviour
     void Awake()
     {
         m_RaycastManager = GetComponent<ARRaycastManager>();
+        debugText = GameObject.Find("Debug Text").GetComponent<Text>();
+
+        //debugText.text = "Hello world";
+
 
         // Assign a callback for when the rotation slider changes
-        this.slider.onValueChanged.AddListener(this.OnSliderChanged);
+        // OLD: this.slider.onValueChanged.AddListener(this.OnSliderChanged);
+        this.rotationSlider.onValueChanged.AddListener(this.OnRotationSliderChanged); // rotation slider callback
+        this.scaleSlider.onValueChanged.AddListener(this.OnScaleSliderChanged); // rotation slider callback
+
 
         // And current value
-        this.previousValue = this.slider.value;
+        this.previousValue = this.rotationSlider.value;
     }
 
     bool TryGetTouchPosition(out Vector2 touchPosition)
@@ -86,12 +97,8 @@ public class PlaceOnPlane : MonoBehaviour
 
         if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
         {
-            // debugText.text = "Clicked in UI";
             return;
         }
-
-
-
 
         if (!TryGetTouchPosition(out Vector2 touchPosition))
             return;
@@ -106,6 +113,7 @@ public class PlaceOnPlane : MonoBehaviour
             {
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
                 objectToRotate = spawnedObject;
+                // debugText.text = "objectToRotate = " + objectToRotate;
             }
             else
             {
@@ -115,20 +123,23 @@ public class PlaceOnPlane : MonoBehaviour
     }
 
 
-    void OnSliderChanged(float value)
+    void OnRotationSliderChanged(float value)
     {
-        // objectToRotate = GameObject.Find("TimeWalkObject");
-        Debug.Log("object: " + objectToRotate);
-
         // How much we've changed
         float delta = value - this.previousValue;
         this.objectToRotate.transform.Rotate(Vector3.down * delta * 360);
 
-
-        Debug.Log("object transform: " + objectToRotate.transform);
-
         // Set our previous value for the next change
         this.previousValue = value;
+    }
+
+
+
+    // SCALE CHANGE
+    void OnScaleSliderChanged(float value)
+    {
+        // Set scale based on slider position
+        this.objectToRotate.transform.localScale = new Vector3(value, value, value);
     }
 
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
