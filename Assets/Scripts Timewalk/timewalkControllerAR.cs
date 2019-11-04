@@ -41,6 +41,7 @@ public class timewalkControllerAR : MonoBehaviour
     public static GameObject currentObject;
     private Text modelNameText;
     private Text debugText;
+    private Renderer planeMeshRenderer;
     private string objectNameString;
     private bool runningOnDesktop;
 
@@ -49,8 +50,6 @@ public class timewalkControllerAR : MonoBehaviour
     private float previousValueScale;
     private GameObject timeWalkObject;
     private GameObject positionHolderObject;
-
-
 
     //private GameObject positionHolderObject; // an empty prefab used to private "parenting" to the objects
 
@@ -79,6 +78,7 @@ public class timewalkControllerAR : MonoBehaviour
     {
         modelNameText = GameObject.Find("Model Name").GetComponent<Text>();
         debugText = GameObject.Find("Debug Text").GetComponent<Text>();
+        //planeMeshRenderer = GameObject.Find("AR Feathered Plane Fade").GetComponent<MeshRenderer>(); // TODO - Find and hide this plane
 
         // Set up list of all prefabs to cycle through...
         // NOTE: make sure all building prefabs are inside this folder: "Assets/Resources/Prefabs"
@@ -99,6 +99,9 @@ public class timewalkControllerAR : MonoBehaviour
         modelNameText.text = objectNameString.Replace("(Clone)", "");
         modelNameText.text = ""; // blank name until placed
         myObj.transform.gameObject.SetActive(false); // hide object at start (not yet placed)
+
+        //myObj.transform.localScale = new Vector3(scaleSlider.value, scaleSlider.value, scaleSlider.value);
+        //myObj.transform.Rotate(Vector3.down * rotationSlider.value * 360);
 
         currentObject = myObj;
 
@@ -141,10 +144,7 @@ public class timewalkControllerAR : MonoBehaviour
                         spawnedObject = Instantiate(m_PlacedPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                         currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
                         currentObject.transform.gameObject.SetActive(true); // show the object now that it is placed
-
-                    // Test disabling the Plane once the object is placed...
-                    // myScript = gameObject.GetComponent<"ARPlaneManager">();
-                    // GameObject.FindGameObjectWithTag("YOUR GAME OBJECT").GetComponent().enabled = false;
+                        // planeMeshRenderer.enabled = false; // TODO: Make plane rendered hide work
                 }
                 else
                     {
