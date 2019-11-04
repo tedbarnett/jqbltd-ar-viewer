@@ -11,7 +11,7 @@ using UnityEngine.XR.ARSubsystems;
 // Listens for touch events and performs an AR raycast from the screen touch point.
 // AR raycasts will only hit detected trackables like feature points and planes.
 //
-// If a raycast hits a trackable, the<see cref="placedPrefab"/> is instantiated
+// If a raycast hits a trackable, the placedPrefab is instantiated
 // and moved to the hit position.
 // 
 // Modified 10/26/2019 by Ted Barnett for TimeWalk.org to enable switching between models
@@ -37,6 +37,7 @@ public class timewalkControllerAR : MonoBehaviour
     private Text modelNameText;
     private Text debugText;
     private string objectNameString;
+    private bool runningOnDesktop;
 
     // Preserve the original and current orientation
     private float previousValue;
@@ -49,7 +50,6 @@ public class timewalkControllerAR : MonoBehaviour
         get { return m_PlacedPrefab; }
         set { m_PlacedPrefab = value; }
     }
-    public GameObject arPlane; // used to hide/show the plane object
 
     //private GameObject positionHolderObject; // an empty prefab used to private "parenting" to the objects
 
@@ -104,7 +104,7 @@ public class timewalkControllerAR : MonoBehaviour
         objectNameString = objectNameString.Substring(5);
         modelNameText.text = objectNameString.Replace("(Clone)", "");
         modelNameText.text = ""; // blank name until placed
-        myObj.transform.gameObject.SetActive(false); // hide object at start (not yet placed)
+        myObj.transform.gameObject.SetActive(true); // hide object at start (not yet placed)
 
         currentObject = myObj;
 
@@ -123,7 +123,7 @@ public class timewalkControllerAR : MonoBehaviour
             {
                 var mousePosition = Input.mousePosition;
                 touchPosition = new Vector2(mousePosition.x, mousePosition.y);
-                debugText.text = "Clicked at " + touchPosition;
+                //debugText.text = "Clicked at " + touchPosition;
 
                 return true;
             }
@@ -142,21 +142,40 @@ public class timewalkControllerAR : MonoBehaviour
 
     void Update()
     {
+        runningOnDesktop = false;
 
         #if UNITY_EDITOR
-        if (Input.GetMouseButton(0)) // mouse click outside UI
-        {
-            if (!EventSystem.current.IsPointerOverGameObject())
+            runningOnDesktop = true;
+
+            if (Input.GetMouseButton(0)) // mouse click outside UI
             {
-                var mousePosition = Input.mousePosition;
-                var clickPosition = new Vector2(mousePosition.x, mousePosition.y);
-                debugText.text = "Clicked at " + clickPosition;
-                // debugText.text = debugText.text + "\n" + "OUTSIDE UI";
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    var mousePosition = Input.mousePosition;
+                    var clickPosition = new Vector2(mousePosition.x, mousePosition.y);
+                    //debugText.text = "Clicked at " + clickPosition;
+                    //debugText.text = "\n" + "Click confirmed";
+
+                    if (spawnedObject == null) // if the object has not been spawned yet
+                    {
+                        spawnedObject = Instantiate(m_PlacedPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                        currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
+                        //debugText.text = "spawnedObject " + spawnedObject.name;
+
+                    // myScript = gameObject.GetComponent<"ARPlaneManager">();
+                    // GameObject.FindGameObjectWithTag("YOUR GAME OBJECT").GetComponent().enabled = false;
+
+                }
+                    else
+                    {
+                        spawnedObject.transform.position = new Vector3(0, 0, 0);
+
+                    }
+
+                }
             }
-        }
         #endif
-
-
+        //debugText.text = "After endif";
         Touch touch;
         if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
         {
@@ -165,11 +184,17 @@ public class timewalkControllerAR : MonoBehaviour
 
         if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) // ignore touches on UI (sliders, etc.)
         {
+            //debugText.text = "Clicked UI";
+
             return;
         }
 
         if (!TryGetTouchPosition(out Vector2 touchPosition))
+        {
+            Debug.Log("No touch position found");
+
             return;
+        }
 
         if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon))
         {
@@ -180,11 +205,6 @@ public class timewalkControllerAR : MonoBehaviour
             {
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
                 currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
-
-                //arPlane.transform.gameObject.SetActive(false); // hide plane after placement
-                arPlane.GetComponent<Renderer>().enabled = false; // hide plane after placement
-
-                //debugText.text = "spawnedObject " + spawnedObject.name;
 
             }
             else
