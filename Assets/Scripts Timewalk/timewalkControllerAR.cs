@@ -95,13 +95,14 @@ public class timewalkControllerAR : MonoBehaviour
         myObj.transform.parent = gameObject.transform; // Makes "myObj" a child of AR Session
 
         objectNameString = myObj.name;
-        // objectNameString = objectNameString.Substring(5); // Only needed with TimeWalk buildings remove first 4 chars)
+        objectNameString = objectNameString.Substring(5); // strip off number in front of prefab name
         modelNameText.text = objectNameString.Replace("(Clone)", "");
+
         modelNameText.text = ""; // blank name until placed
         myObj.transform.gameObject.SetActive(false); // hide object at start (not yet placed)
 
-        //myObj.transform.localScale = new Vector3(scaleSlider.value, scaleSlider.value, scaleSlider.value);
-        //myObj.transform.Rotate(Vector3.down * rotationSlider.value * 360);
+        myObj.transform.localScale = new Vector3(scaleSlider.value, scaleSlider.value, scaleSlider.value); // scale per current scale slider
+        myObj.transform.Rotate(Vector3.down * rotationSlider.value * 360); // rotate per current rotation slider
 
         currentObject = myObj;
 
@@ -141,38 +142,49 @@ public class timewalkControllerAR : MonoBehaviour
                     var clickPosition = new Vector2(mousePosition.x, mousePosition.y);
                     if (spawnedObject == null) // if the object has not been spawned yet, then spawn it at origin
                     {
-                        spawnedObject = Instantiate(m_PlacedPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                        spawnedObject = Instantiate(m_PlacedPrefab, new Vector3(2, 0, 0), Quaternion.identity);
                         currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
                         currentObject.transform.gameObject.SetActive(true); // show the object now that it is placed
                         // planeMeshRenderer.enabled = false; // TODO: Make plane rendered hide work
+                        debugText.text = "position: " + spawnedObject.transform.position;
+                        debugText.text = debugText.text + "\n" + "parent: " + spawnedObject.gameObject.name;
+                        debugText.text = debugText.text + "\n" + "FIRST PLACEMENT";
+
                 }
                 else
                     {
-                        spawnedObject.transform.position = new Vector3(0, 0, 0);
-                    }
+                        spawnedObject.transform.position = new Vector3(1, 0, 0);
+                        debugText.text = "position: " + spawnedObject.transform.position;
+                        debugText.text = debugText.text + "\n" + "parent: " + spawnedObject.gameObject.name;
                 }
+            }
             }
         #endif
 
-        Touch touch;
-        if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began) return;
-        if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return; // ignore touches on UI (sliders, etc.)
-        if (!TryGetTouchPosition(out Vector2 touchPosition)) return; // if no touch, then return from Update
+        // Return if not a valid AR "touch"
+            Touch touch;
+            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began) return;
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return; // ignore touches on UI (sliders, etc.)
+            if (!TryGetTouchPosition(out Vector2 touchPosition)) return; // if no touch, then return from Update
 
         if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon))
         {
-            // Raycast hits are sorted by distance, so the first one will be the closest hit
-            var hitPose = s_Hits[0].pose;
+            var hitPose = s_Hits[0].pose; // Raycast hits are sorted by distance, so the first one will be the closest hit
 
             if (spawnedObject == null) // if the object has not been spawned yet
             {
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
                 currentObject.transform.parent = spawnedObject.gameObject.transform; // set as child of the spawned object
                 currentObject.transform.gameObject.SetActive(true); // show the object now that it is placed
+                debugText.text = "position: " + spawnedObject.transform.position;
+                debugText.text = debugText.text + "\n" + "parent: " + spawnedObject.gameObject.name;
+                debugText.text = debugText.text + "\n" + "FIRST PLACEMENT";
             }
             else
             {
                 spawnedObject.transform.position = hitPose.position;
+                debugText.text = "position: " + spawnedObject.transform.position;
+                debugText.text = debugText.text + "\n" + "parent: " + spawnedObject.gameObject.name;
             }
         }
     }
@@ -183,18 +195,10 @@ public class timewalkControllerAR : MonoBehaviour
         Destroy(currentObject);
 
         currentObjectIndex = currentObjectIndex + incrementNumber;
-        if (currentObjectIndex >= objectsListLength)
-        {
-            currentObjectIndex = 0;
-        }
-
-        if (currentObjectIndex < 0)
-        {
-            currentObjectIndex = objectsListLength - 1;
-        }
+        if (currentObjectIndex >= objectsListLength) currentObjectIndex = 0;
+        if (currentObjectIndex < 0) currentObjectIndex = objectsListLength - 1;
 
         GameObject myObj = Instantiate(myListObjects[currentObjectIndex]) as GameObject;
-
         myObj.transform.gameObject.SetActive(true); // TODO: Is this necessary???
 
         //myObj.transform.parent = positionHolderObject.gameObject.transform; // set as child of the timewalkObject
@@ -202,9 +206,8 @@ public class timewalkControllerAR : MonoBehaviour
         myObj.transform.localScale = new Vector3(scaleSlider.value, scaleSlider.value, scaleSlider.value);
         myObj.transform.Rotate(Vector3.down * rotationSlider.value * 360);
 
-
         objectNameString = myObj.name;
-        // objectNameString = objectNameString.Substring(5);
+        objectNameString = objectNameString.Substring(5); // strip off number in front of prefab name
         modelNameText.text = objectNameString.Replace("(Clone)", "");
 
         myObj.transform.position = transform.position; // Should we revert to this?
