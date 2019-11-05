@@ -28,6 +28,7 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     // Preserve the original and current orientation
     private float previousValue;
     private Text debugText;
+    private Text scaleText;
     private Text modelNameText;
 
     public GameObject placedPrefab
@@ -43,31 +44,32 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     {
         m_RaycastManager = GetComponent<ARRaycastManager>();
         debugText = GameObject.Find("Debug Text").GetComponent<Text>();
+        //scaleText = GameObject.Find("Scaling Ratio Text").GetComponent<Text>();
         modelNameText = GameObject.Find("Model Name").GetComponent<Text>();
 
         // Assign a callback for when the rotation slider changes
         this.rotationSlider.onValueChanged.AddListener(this.OnRotationSliderChanged); // rotation slider callback
-            this.previousValue = this.rotationSlider.value;
+        this.previousValue = this.rotationSlider.value;
         this.scaleSlider.onValueChanged.AddListener(this.OnScaleSliderChanged); // rotation slider callback
 
     }
 
     bool TryGetTouchPosition(out Vector2 touchPosition)
     {
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         if (Input.GetMouseButton(0))
         {
             var mousePosition = Input.mousePosition;
             touchPosition = new Vector2(mousePosition.x, mousePosition.y);
             return true;
         }
-    #else
+#else
             if (Input.touchCount > 0)
             {
                 touchPosition = Input.GetTouch(0).position;
                 return true;
             }
-    #endif
+#endif
 
         touchPosition = default;
         return false;
@@ -115,12 +117,12 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     {
         // Set scale based on slider position
         float scaleValue = ScaleConvert(value);
-        debugText.text = "scaleValue = " + scaleValue;
+        // debugText.text = "Scale = 1 : " + System.Math.Round(100 / scaleValue, 2);
         this.spawnedObject.transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
     }
 
     // Convert Prefab name to Model Name String
-    string ModelNameFix (string originalName)
+    string ModelNameFix(string originalName)
     {
         string ret;
         ret = originalName.Substring(5); // strip off number in front of prefab name
@@ -129,7 +131,7 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     }
 
     // Convert Scale Slider to Scale Value
-    float ScaleConvert (float value)
+    float ScaleConvert(float value)
     {
         float ret;
         ret = Mathf.Pow(10, (value - 1));
