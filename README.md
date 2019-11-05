@@ -1,6 +1,6 @@
 # JQB Ltd AR Boat Viewer
 Augmented Reality (AR) project based on "Place on Plane" code from [*AR Foundation 3.0*](https://docs.unity3d.com/Packages/com.unity.xr.arfoundation@3.0/manual/index.html).  
 
-Tested on iOS 13.1.
+Tested on iOS 13.1 and 13.2 running on iPhone 11 and iPhone 10.
 
 Boat designed by Jon Barnett at JQB Design (www.jqbltd.com).
