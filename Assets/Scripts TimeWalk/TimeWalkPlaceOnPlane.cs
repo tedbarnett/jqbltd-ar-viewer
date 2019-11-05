@@ -78,12 +78,34 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     void Update()
     {
 
+        #if UNITY_EDITOR
+            if (Input.GetMouseButton(0)) // mouse click outside UI
+            {
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    var mousePosition = Input.mousePosition;
+                    var clickPosition = new Vector2(mousePosition.x, mousePosition.y);
+                    if (spawnedObject == null) // if the object has not been spawned yet, then spawn it at origin
+                    {
+                        spawnedObject = Instantiate(m_PlacedPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                        modelNameText.text = ModelNameFix(placedPrefab.name);
+                    }
+                    else
+                    {
+                        spawnedObject.transform.position = new Vector3(0, 0, 0);
+                    }
+                }
+            }
+        #endif
+
         // Return if clicking in UI area
         Touch touch; // per ARCore example (compare to below)
 
         if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began) return;
         if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return;
         if (!TryGetTouchPosition(out Vector2 touchPosition)) return;
+
+
 
         if (m_RaycastManager.Raycast(touchPosition, s_Hits, TrackableType.PlaneWithinPolygon))
         {
