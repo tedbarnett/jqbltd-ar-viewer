@@ -28,6 +28,7 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     // Preserve the original and current orientation
     private float previousValue;
     private Text debugText;
+    private Text scaleText;
     private Text modelNameText;
 
     public GameObject placedPrefab
@@ -43,6 +44,7 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     {
         m_RaycastManager = GetComponent<ARRaycastManager>();
         debugText = GameObject.Find("Debug Text").GetComponent<Text>();
+        scaleText = GameObject.Find("Scaling Ratio Text").GetComponent<Text>();
         modelNameText = GameObject.Find("Model Name").GetComponent<Text>();
 
         // Assign a callback for when the rotation slider changes
@@ -115,7 +117,7 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     {
         // Set scale based on slider position
         float scaleValue = ScaleConvert(value);
-        debugText.text = "scaleValue = " + scaleValue;
+        scaleText.text = "Scale = 1 : " + System.Math.Round(100/scaleValue, 2);
         this.spawnedObject.transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
     }
 
