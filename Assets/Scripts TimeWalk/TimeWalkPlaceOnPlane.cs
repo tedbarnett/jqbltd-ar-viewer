@@ -47,28 +47,27 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
 
         // Assign a callback for when the rotation slider changes
         this.rotationSlider.onValueChanged.AddListener(this.OnRotationSliderChanged); // rotation slider callback
+            this.previousValue = this.rotationSlider.value;
         this.scaleSlider.onValueChanged.AddListener(this.OnScaleSliderChanged); // rotation slider callback
 
-        // And current value
-        this.previousValue = this.rotationSlider.value;
     }
 
     bool TryGetTouchPosition(out Vector2 touchPosition)
     {
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
         if (Input.GetMouseButton(0))
         {
             var mousePosition = Input.mousePosition;
             touchPosition = new Vector2(mousePosition.x, mousePosition.y);
             return true;
         }
-#else
+    #else
             if (Input.touchCount > 0)
             {
                 touchPosition = Input.GetTouch(0).position;
                 return true;
             }
-#endif
+    #endif
 
         touchPosition = default;
         return false;
@@ -91,7 +90,6 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
             if (spawnedObject == null)
             {
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-                objectToModify = spawnedObject;
                 modelNameText.text = ModelNameFix(placedPrefab.name);
 
             }
@@ -107,24 +105,21 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     {
         // How much we've changed
         float delta = value - this.previousValue;
-        this.objectToModify.transform.Rotate(Vector3.down * delta * 360);
+        this.spawnedObject.transform.Rotate(Vector3.down * delta * 360);
 
         // Set our previous value for the next change
         this.previousValue = value;
     }
 
-
-
-    // SCALE CHANGE
     void OnScaleSliderChanged(float value)
     {
         // Set scale based on slider position
         float scaleValue = ScaleConvert(value);
         debugText.text = "scaleValue = " + scaleValue;
-        this.objectToModify.transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
+        this.spawnedObject.transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
     }
 
-    // Convert Prefab name to Model String
+    // Convert Prefab name to Model Name String
     string ModelNameFix (string originalName)
     {
         string ret;
@@ -132,8 +127,6 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
         ret = ret.Replace("(Clone)", "");
         return ret;
     }
-
-
 
     // Convert Scale Slider to Scale Value
     float ScaleConvert (float value)
