@@ -44,7 +44,7 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     {
         m_RaycastManager = GetComponent<ARRaycastManager>();
         debugText = GameObject.Find("Debug Text").GetComponent<Text>();
-        //scaleText = GameObject.Find("Scaling Ratio Text").GetComponent<Text>();
+        scaleText = GameObject.Find("Scaling Ratio Text").GetComponent<Text>();
         modelNameText = GameObject.Find("Model Name").GetComponent<Text>();
 
         // Assign a callback for when the rotation slider changes
@@ -139,7 +139,9 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     {
         // Set scale based on slider position
         float scaleValue = ScaleConvert(value);
-        // debugText.text = "Scale = 1 : " + System.Math.Round(100 / scaleValue, 2);
+        double scaleRatio = System.Math.Round(100 / scaleValue, 1);
+        if (scaleRatio > 10) scaleRatio = System.Math.Round(scaleRatio, 0);
+        scaleText.text = "Scale = 1 : " + scaleRatio;
         this.spawnedObject.transform.localScale = new Vector3(scaleValue, scaleValue, scaleValue);
     }
 
