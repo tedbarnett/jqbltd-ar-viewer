@@ -625,6 +625,76 @@ PrefabInstance:
       propertyPath: m_Name
       value: Helicopter
       objectReference: {fileID: 0}
+    - target: {fileID: 7025068136620896449, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7025068136620896449, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6617563411604301208, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6617563411604301208, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6524820500444348693, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6524820500444348693, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077935840565073574, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077935840565073574, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664588986908778158, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664588986908778158, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346086029590697315, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346086029590697315, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8790295738107314889, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8790295738107314889, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7965683953510953997, guid: 4f22bf764446d4596a75e1bb56b3b242,
         type: 3}
       propertyPath: xForceDirection
