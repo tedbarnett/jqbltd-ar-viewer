@@ -260,16 +260,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1453966080925276014}
     m_Modifications:
-    - target: {fileID: 8383220414586008425, guid: 328fb4ce3c2814ebf85c868a602cf6b8,
-        type: 3}
-      propertyPath: m_Name
-      value: Seagull Flock - Wild Few
-      objectReference: {fileID: 0}
-    - target: {fileID: 8383220414586008425, guid: 328fb4ce3c2814ebf85c868a602cf6b8,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8383220414586040137, guid: 328fb4ce3c2814ebf85c868a602cf6b8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -339,6 +329,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383220414586008425, guid: 328fb4ce3c2814ebf85c868a602cf6b8,
+        type: 3}
+      propertyPath: m_Name
+      value: Seagull Flock - Wild Few
+      objectReference: {fileID: 0}
+    - target: {fileID: 8383220414586008425, guid: 328fb4ce3c2814ebf85c868a602cf6b8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8383220414593091209, guid: 328fb4ce3c2814ebf85c868a602cf6b8,
         type: 3}
@@ -475,11 +475,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1453966080925276014}
     m_Modifications:
-    - target: {fileID: 8267424438524123366, guid: 82d211d0afec2493a84d2abbf2bf6d31,
-        type: 3}
-      propertyPath: m_Name
-      value: US flag on boat
-      objectReference: {fileID: 0}
     - target: {fileID: 8267424438524123369, guid: 82d211d0afec2493a84d2abbf2bf6d31,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -550,6 +545,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.45722002
       objectReference: {fileID: 0}
+    - target: {fileID: 8267424438524123366, guid: 82d211d0afec2493a84d2abbf2bf6d31,
+        type: 3}
+      propertyPath: m_Name
+      value: US flag on boat
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82d211d0afec2493a84d2abbf2bf6d31, type: 3}
 --- !u!4 &7425022209954765570 stripped
@@ -565,11 +565,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1453966080925276014}
     m_Modifications:
-    - target: {fileID: 3089948934805025420, guid: 4f22bf764446d4596a75e1bb56b3b242,
-        type: 3}
-      propertyPath: m_Name
-      value: Helicopter
-      objectReference: {fileID: 0}
     - target: {fileID: 182197177463158885, guid: 4f22bf764446d4596a75e1bb56b3b242,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -624,6 +619,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089948934805025420, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: m_Name
+      value: Helicopter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965683953510953997, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: xForceDirection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7965683953510953997, guid: 4f22bf764446d4596a75e1bb56b3b242,
+        type: 3}
+      propertyPath: yForceDirection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4f22bf764446d4596a75e1bb56b3b242, type: 3}
