@@ -168,7 +168,7 @@ PlayerSettings:
     Standalone: com.unity.arfoundation.samples
     iPhone: com.timewalk.jqbltd-arviewer
   buildNumber:
-    iPhone: 6
+    iPhone: 7
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 24
   AndroidTargetSdkVersion: 0
