@@ -527,10 +527,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9451cf5242246adb24f57ae20e2151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlacedPrefab: {fileID: 8687496375005388161, guid: 3ea6d0162d84a43d48361fae786e80e1,
+  m_PlacedPrefab: {fileID: 1934569588295450, guid: b34b6c8f1206a6844b983e23b9da0441,
     type: 3}
   rotationSlider: {fileID: 421589288}
   scaleSlider: {fileID: 478273353}
+  displayName: 145m Exploration World Cruiser
 --- !u!114 &1335839539
 MonoBehaviour:
   m_ObjectHideFlags: 0

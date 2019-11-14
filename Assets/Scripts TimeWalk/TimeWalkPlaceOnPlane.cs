@@ -30,6 +30,7 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
     private Text debugText;
     private Text scaleText;
     private Text modelNameText;
+    public string displayName;
 
     public GameObject placedPrefab
     {
@@ -88,8 +89,9 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
                     if (spawnedObject == null) // if the object has not been spawned yet, then spawn it at origin
                     {
                         spawnedObject = Instantiate(m_PlacedPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-                        modelNameText.text = ModelNameFix(placedPrefab.name);
-                    }
+                        //modelNameText.text = ModelNameFix(placedPrefab.name);
+                        modelNameText.text = displayName;
+                }
                     else
                     {
                         spawnedObject.transform.position = new Vector3(0, 0, 0);
@@ -114,7 +116,8 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
             if (spawnedObject == null)
             {
                 spawnedObject = Instantiate(m_PlacedPrefab, hitPose.position, hitPose.rotation);
-                modelNameText.text = ModelNameFix(placedPrefab.name);
+                //modelNameText.text = ModelNameFix(placedPrefab.name);
+                modelNameText.text = displayName;
 
             }
             else
