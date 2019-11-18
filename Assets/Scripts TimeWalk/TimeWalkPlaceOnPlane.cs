@@ -22,8 +22,10 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
 
     // Assign in the inspector
     private GameObject objectToModify;
+    private ParticleSystem fireworksParticleSystem;
     public Slider rotationSlider;
     public Slider scaleSlider;
+    public Button fireworksButton;
 
     // Preserve the original and current orientation
     private float previousValue;
@@ -52,6 +54,7 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
         this.rotationSlider.onValueChanged.AddListener(this.OnRotationSliderChanged); // rotation slider callback
         this.previousValue = this.rotationSlider.value;
         this.scaleSlider.onValueChanged.AddListener(this.OnScaleSliderChanged); // rotation slider callback
+        this.fireworksButton.onClick.AddListener(this.LaunchFireworks); // fireworks launch callback
 
     }
 
@@ -163,6 +166,13 @@ public class TimeWalkPlaceOnPlane : MonoBehaviour
         float ret;
         ret = Mathf.Pow(10, (value - 1));
         return ret;
+    }
+
+    void LaunchFireworks()
+    {
+        fireworksParticleSystem = GameObject.Find("Rocket particles").GetComponent<ParticleSystem>();
+        fireworksParticleSystem.Play();
+
     }
 
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
